@@ -86,21 +86,20 @@ const VikingRootsQuestionnaire = () => {
       minHeight: '100vh', 
       display: 'flex', 
       flexDirection: 'column',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      backgroundColor: '#000'
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
     }}>
       {/* Header */}
       <header style={{ 
         padding: '20px', 
-        borderBottom: '1px solid #222',
-        backgroundColor: '#000'
+        borderBottom: '1px solid #e5e5e5',
+        backgroundColor: '#fff'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto' }}>
           <h1 style={{ 
             margin: 0, 
             fontSize: '20px', 
             fontWeight: '600',
-            color: '#fff'
+            color: '#111'
           }}>
             Viking Roots
           </h1>
@@ -128,7 +127,7 @@ const VikingRootsQuestionnaire = () => {
           }}>
             <p style={{ 
               fontSize: '16px',
-              color: '#888',
+              color: '#666',
               margin: 0,
               textAlign: 'center'
             }}>
@@ -141,8 +140,8 @@ const VikingRootsQuestionnaire = () => {
                 padding: '12px 32px',
                 fontSize: '15px',
                 fontWeight: '500',
-                backgroundColor: '#fff',
-                color: '#000',
+                backgroundColor: '#111',
+                color: 'white',
                 border: 'none',
                 borderRadius: '6px',
                 cursor: isLoading ? 'not-allowed' : 'pointer',
@@ -176,8 +175,8 @@ const VikingRootsQuestionnaire = () => {
                     maxWidth: '70%',
                     padding: '12px 16px',
                     borderRadius: '12px',
-                    backgroundColor: msg.role === 'user' ? '#fff' : '#1a1a1a',
-                    color: msg.role === 'user' ? '#000' : '#fff',
+                    backgroundColor: msg.role === 'user' ? '#111' : '#f5f5f5',
+                    color: msg.role === 'user' ? '#fff' : '#111',
                     fontSize: '15px',
                     lineHeight: '1.5'
                   }}>
@@ -193,7 +192,7 @@ const VikingRootsQuestionnaire = () => {
                   <div style={{
                     padding: '12px 16px',
                     borderRadius: '12px',
-                    backgroundColor: '#1a1a1a',
+                    backgroundColor: '#f5f5f5',
                     color: '#666',
                     fontSize: '15px'
                   }}>
@@ -207,8 +206,8 @@ const VikingRootsQuestionnaire = () => {
             {/* Input Form */}
             <div style={{ 
               padding: '20px 0',
-              borderTop: '1px solid #222',
-              backgroundColor: '#000'
+              borderTop: '1px solid #e5e5e5',
+              backgroundColor: '#fff'
             }}>
               <form onSubmit={sendMessage} style={{ 
                 display: 'flex', 
@@ -225,10 +224,9 @@ const VikingRootsQuestionnaire = () => {
                     padding: '12px 16px',
                     fontSize: '15px',
                     borderRadius: '8px',
-                    border: '1px solid #222',
+                    border: '1px solid #e5e5e5',
                     outline: 'none',
-                    backgroundColor: '#000',
-                    color: '#fff'
+                    backgroundColor: '#fff'
                   }}
                 />
                 <button
@@ -238,8 +236,8 @@ const VikingRootsQuestionnaire = () => {
                     padding: '12px 24px',
                     fontSize: '15px',
                     fontWeight: '500',
-                    backgroundColor: '#fff',
-                    color: '#000',
+                    backgroundColor: '#111',
+                    color: 'white',
                     border: 'none',
                     borderRadius: '8px',
                     cursor: (isLoading || !inputMessage.trim()) ? 'not-allowed' : 'pointer',
