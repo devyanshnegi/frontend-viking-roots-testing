@@ -8,8 +8,7 @@ interface Message {
   timestamp: Date;
 }
 
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/questionaire';
-const API_BASE_URL = "https://backend-viking-roots-testing-production.up.railway.app/api/questionaire";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/questionaire';
 
 const VikingRootsQuestionnaire = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -83,112 +82,178 @@ const VikingRootsQuestionnaire = () => {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ textAlign: 'center', color: '#8B4513' }}>
-        Viking Roots - Heritage Interview
-      </h1>
-
-      {!hasStarted ? (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-          <p style={{ fontSize: '18px', marginBottom: '30px' }}>
-            Begin your journey to discover and preserve your family's saga
-          </p>
-          <button 
-            onClick={startInterview}
-            disabled={isLoading}
-            style={{
-              padding: '15px 40px',
-              fontSize: '18px',
-              backgroundColor: '#8B4513',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              opacity: isLoading ? 0.6 : 1
-            }}
-          >
-            {isLoading ? 'Starting...' : 'Begin Your Saga'}
-          </button>
-        </div>
-      ) : (
-        <div>
-          <div style={{
-            border: '2px solid #8B4513',
-            borderRadius: '10px',
-            padding: '20px',
-            height: '500px',
-            overflowY: 'auto',
-            marginBottom: '20px',
-            backgroundColor: '#fafaf8'
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      backgroundColor: '#000'
+    }}>
+      {/* Header */}
+      <header style={{ 
+        padding: '20px', 
+        borderBottom: '1px solid #222',
+        backgroundColor: '#000'
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <h1 style={{ 
+            margin: 0, 
+            fontSize: '20px', 
+            fontWeight: '600',
+            color: '#fff'
           }}>
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                style={{
-                  marginBottom: '15px',
-                  padding: '12px',
-                  borderRadius: '8px',
-                  backgroundColor: msg.role === 'user' ? '#e3f2fd' : '#fff3e0',
-                  marginLeft: msg.role === 'user' ? '20%' : '0',
-                  marginRight: msg.role === 'user' ? '0' : '20%'
-                }}
-              >
-                <strong style={{ color: msg.role === 'user' ? '#1976d2' : '#8B4513' }}>
-                  {msg.role === 'user' ? 'You' : 'Digital Skald'}
-                </strong>
-                <p style={{ margin: '8px 0 0 0', lineHeight: '1.5' }}>
-                  {msg.content}
-                </p>
-              </div>
-            ))}
-            {isLoading && (
-              <div style={{ 
-                textAlign: 'center', 
-                color: '#8B4513',
-                fontStyle: 'italic',
-                padding: '20px'
-              }}>
-                The Skald is weaving your tale...
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+            Viking Roots
+          </h1>
+        </div>
+      </header>
 
-          <form onSubmit={sendMessage} style={{ display: 'flex', gap: '10px' }}>
-            <input
-              type="text"
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              placeholder="Share your story..."
+      {/* Main Content */}
+      <main style={{ 
+        flex: 1, 
+        display: 'flex', 
+        flexDirection: 'column',
+        maxWidth: '800px',
+        width: '100%',
+        margin: '0 auto',
+        padding: '0 20px'
+      }}>
+        {!hasStarted ? (
+          <div style={{ 
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '24px'
+          }}>
+            <p style={{ 
+              fontSize: '16px',
+              color: '#888',
+              margin: 0,
+              textAlign: 'center'
+            }}>
+              Discover and preserve your family's heritage
+            </p>
+            <button 
+              onClick={startInterview}
               disabled={isLoading}
               style={{
-                flex: 1,
-                padding: '12px',
-                fontSize: '16px',
-                borderRadius: '8px',
-                border: '2px solid #8B4513',
-                outline: 'none'
-              }}
-            />
-            <button
-              type="submit"
-              disabled={isLoading || !inputMessage.trim()}
-              style={{
-                padding: '12px 30px',
-                fontSize: '16px',
-                backgroundColor: '#8B4513',
-                color: 'white',
+                padding: '12px 32px',
+                fontSize: '15px',
+                fontWeight: '500',
+                backgroundColor: '#fff',
+                color: '#000',
                 border: 'none',
-                borderRadius: '8px',
-                cursor: (isLoading || !inputMessage.trim()) ? 'not-allowed' : 'pointer',
-                opacity: (isLoading || !inputMessage.trim()) ? 0.6 : 1
+                borderRadius: '6px',
+                cursor: isLoading ? 'not-allowed' : 'pointer',
+                opacity: isLoading ? 0.5 : 1,
+                transition: 'opacity 0.2s'
               }}
             >
-              Send
+              {isLoading ? 'Starting...' : 'Begin'}
             </button>
-          </form>
-        </div>
-      )}
+          </div>
+        ) : (
+          <>
+            {/* Messages */}
+            <div style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '24px 0',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '16px'
+            }}>
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: 'flex',
+                    justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start'
+                  }}
+                >
+                  <div style={{
+                    maxWidth: '70%',
+                    padding: '12px 16px',
+                    borderRadius: '12px',
+                    backgroundColor: msg.role === 'user' ? '#fff' : '#1a1a1a',
+                    color: msg.role === 'user' ? '#000' : '#fff',
+                    fontSize: '15px',
+                    lineHeight: '1.5'
+                  }}>
+                    {msg.content}
+                  </div>
+                </div>
+              ))}
+              {isLoading && (
+                <div style={{ 
+                  display: 'flex',
+                  justifyContent: 'flex-start'
+                }}>
+                  <div style={{
+                    padding: '12px 16px',
+                    borderRadius: '12px',
+                    backgroundColor: '#1a1a1a',
+                    color: '#666',
+                    fontSize: '15px'
+                  }}>
+                    ...
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input Form */}
+            <div style={{ 
+              padding: '20px 0',
+              borderTop: '1px solid #222',
+              backgroundColor: '#000'
+            }}>
+              <form onSubmit={sendMessage} style={{ 
+                display: 'flex', 
+                gap: '8px'
+              }}>
+                <input
+                  type="text"
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  placeholder="Type your message..."
+                  disabled={isLoading}
+                  style={{
+                    flex: 1,
+                    padding: '12px 16px',
+                    fontSize: '15px',
+                    borderRadius: '8px',
+                    border: '1px solid #222',
+                    outline: 'none',
+                    backgroundColor: '#000',
+                    color: '#fff'
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading || !inputMessage.trim()}
+                  style={{
+                    padding: '12px 24px',
+                    fontSize: '15px',
+                    fontWeight: '500',
+                    backgroundColor: '#fff',
+                    color: '#000',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: (isLoading || !inputMessage.trim()) ? 'not-allowed' : 'pointer',
+                    opacity: (isLoading || !inputMessage.trim()) ? 0.5 : 1,
+                    transition: 'opacity 0.2s'
+                  }}
+                >
+                  Send
+                </button>
+              </form>
+            </div>
+          </>
+        )}
+      </main>
     </div>
   );
 };
