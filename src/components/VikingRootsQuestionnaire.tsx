@@ -8,7 +8,8 @@ interface Message {
   timestamp: Date;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/questionaire';
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/questionaire';
+const API_BASE_URL = "backend-viking-roots-testing-production.up.railway.app";
 
 const VikingRootsQuestionnaire = () => {
   const [messages, setMessages] = useState<Message[]>([]);
