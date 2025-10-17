@@ -1,16 +1,20 @@
-// Simple React component for the Viking Roots questionnaire
-
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api/questionaire';
+interface Message {
+  role: 'user' | 'model';
+  content: string;
+  timestamp: Date;
+}
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/questionaire';
 
 const VikingRootsQuestionnaire = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -20,7 +24,6 @@ const VikingRootsQuestionnaire = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Start the interview
   const startInterview = async () => {
     try {
       setIsLoading(true);
@@ -40,14 +43,12 @@ const VikingRootsQuestionnaire = () => {
     }
   };
 
-  // Send a message
-  const sendMessage = async (e) => {
+  const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!inputMessage.trim()) return;
 
-    // Add user message to display
-    const userMessage = {
+    const userMessage: Message = {
       role: 'user',
       content: inputMessage,
       timestamp: new Date()
@@ -59,14 +60,12 @@ const VikingRootsQuestionnaire = () => {
     setIsLoading(true);
 
     try {
-      // Send message with chat history to backend
       const response = await axios.post(`${API_BASE_URL}/message/`, {
         message: inputMessage,
         chat_history: newMessages
       });
 
-      // Add AI response
-      const aiMessage = {
+      const aiMessage: Message = {
         role: 'model',
         content: response.data.message,
         timestamp: new Date()
@@ -111,7 +110,6 @@ const VikingRootsQuestionnaire = () => {
         </div>
       ) : (
         <div>
-          {/* Chat Messages */}
           <div style={{
             border: '2px solid #8B4513',
             borderRadius: '10px',
@@ -154,7 +152,6 @@ const VikingRootsQuestionnaire = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Form */}
           <form onSubmit={sendMessage} style={{ display: 'flex', gap: '10px' }}>
             <input
               type="text"
